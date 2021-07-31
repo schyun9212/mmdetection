@@ -1,0 +1,30 @@
+version: "2.3"
+services:
+  mmdetection:
+    container_name: mmdetection-${USER}
+    image: mmdetection:0.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_ID: ${USER_ID:-1000}
+        USER: ${USER}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities:
+              - gpu
+    shm_size: "8gb"
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    volumes:
+      - ..:/home/${USER}/mmdetection
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - ${DATASET_DIR}:/home/${USER}/mmdetection/data
+      - ${MODEL_DIR}:/home/${USER}/mmdetection/work_dirs
+    environment:
+      - DISPLAY=$DISPLAY
+      - NVIDIA_VISIBLE_DEVICES=all
+    tty: true

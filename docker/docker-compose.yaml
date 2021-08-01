@@ -26,4 +26,5 @@ services:
     environment:
       - DISPLAY=$DISPLAY
       - NVIDIA_VISIBLE_DEVICES=all
+      - TERM=xterm-256color
     tty: true

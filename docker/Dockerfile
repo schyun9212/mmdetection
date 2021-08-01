@@ -10,7 +10,7 @@ ENV CMAKE_PREFIX_PATH="$(dirname $(which conda))/../"
 
 RUN apt-get update \
     && apt-get install -y ffmpeg libsm6 libxext6 git ninja-build libglib2.0-0 libsm6 libxrender-dev libxext6 \
-    && apt-get install -y tmux vim \
+    && apt-get install -y tmux vim wget sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -23,6 +23,8 @@ ARG USER=appuser
 RUN useradd -m --no-log-init --system  --uid ${USER_ID} ${USER} -g sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER ${USER}
+
+RUN sudo chsh ${USER} -s $(which bash)
 
 # Install tmux
 RUN cd \

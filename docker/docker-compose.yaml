@@ -2,7 +2,7 @@ version: "2.3"
 services:
   mmdetection:
     container_name: mmdetection-${USER}
-    image: mmdetection:0.0.1
+    image: mmdetection:0.0.2
     build:
       context: .
       dockerfile: Dockerfile
@@ -20,7 +20,6 @@ services:
       memlock: -1
       stack: 67108864
     volumes:
-      - ..:/home/${USER}/mmdetection
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
       - ${DATASET_DIR}:/home/${USER}/mmdetection/data
       - ${MODEL_DIR}:/home/${USER}/mmdetection/work_dirs
